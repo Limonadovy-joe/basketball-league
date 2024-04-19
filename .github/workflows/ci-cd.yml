@@ -1,0 +1,35 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+env:
+  NODE_VERSION: 16.14.x
+jobs:
+  build:
+    name: 'Build'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build application
+        run: pnpm build
+      - name: Run formatter
+        run: pnpm prettier --check
+      - name: Run lint
+        run: pnpm lint
+      - name: Check types
+        run: pnpm check-types
+      - name: Run test
+        run: pnpm test
