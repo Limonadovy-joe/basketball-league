@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check-types": "tsc --project tsconfig.json --pretty --noEmit",
     "check-format": "npm run prettier -- --list-different",
-    "validate": "npm-run-all --parallel check-types pre-commit",
+    "validate": "npm-run-all check-types pre-commit",
     "preview": "vite preview",
     "pre-commit": "lint-staged",
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
@@ -69,6 +69,7 @@
   },
   "lint-staged": {
     "*.+(ts|tsx)": [
+      "pnpm format",
       "pnpm lint"
     ]
   }
